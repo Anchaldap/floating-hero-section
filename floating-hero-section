@@ -1,1 +1,163 @@
 
+
+/////HeroSection.tsx
+"use client";
+
+import {
+  Gavel,
+  CheckSquare,
+  CreditCard,
+  Folder,
+  Briefcase,
+} from "lucide-react";
+
+export default function HeroSection() {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-white to-blue-50 overflow-hidden">
+
+      {/* TITLE */}
+      <div className="text-center max-w-3xl">
+
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900">
+          Legal Work Management Platform
+        </h1>
+
+        <p className="mt-4 text-gray-600 text-lg">
+          Click modules below to explore Billing, Matters, Tasks and Documents
+        </p>
+
+        {/* FLOATING BUTTONS CONTAINER */}
+        <div className="relative mt-20 flex justify-center items-center">
+
+          {/* Billing */}
+          <a
+            href="#billing"
+            className="absolute -top-10 -left-16 bg-blue-500 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:scale-110 transition"
+          >
+            <CreditCard size={16} />
+            Billing
+          </a>
+
+          {/* Matters */}
+          <a
+            href="#matters"
+            className="absolute top-10 -right-16 bg-orange-500 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:scale-110 transition"
+          >
+            <Gavel size={16} />
+            Matters
+          </a>
+
+          {/* Tasks */}
+          <a
+            href="#tasks"
+            className="absolute -bottom-10 -left-20 bg-gray-900 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:scale-110 transition"
+          >
+            <CheckSquare size={16} />
+            Tasks
+          </a>
+
+          {/* Documents */}
+          <a
+            href="#documents"
+            className="absolute -bottom-10 right-0 bg-purple-600 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:scale-110 transition"
+          >
+            <Folder size={16} />
+            Documents
+          </a>
+
+          {/* CENTER ICON */}
+          <div className="w-44 h-44 bg-white rounded-full shadow-2xl flex items-center justify-center">
+            <Briefcase size={45} className="text-gray-700" />
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+
+
+
+
+///Foating card 
+"use client";
+
+import { motion } from "framer-motion";
+import { LucideIcon } from "lucide-react";
+
+interface FloatingCardProps {
+  icon?: LucideIcon;
+  label?: string;
+  color?: string;
+  rotation?: string;
+  className?: string;
+  variant?: "default" | "portal";
+}
+
+export default function FloatingCard({
+  icon: Icon,
+  label,
+  color = "bg-white",
+  rotation = "rotate-0",
+  className = "",
+  variant = "default",
+}: FloatingCardProps) {
+
+  if (variant === "portal") {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        whileHover={{ scale: 1.05 }}
+        className={`absolute rounded-2xl bg-[#111827] text-white p-5 shadow-2xl ${rotation} ${className}`}
+      >
+        <div className="flex items-center gap-3">
+
+          <div className="w-12 h-12 rounded-full bg-gray-400"></div>
+
+          <div>
+            <h3 className="font-semibold text-sm">
+              John Doe
+            </h3>
+
+            <p className="text-xs text-gray-300">
+              Portal
+            </p>
+          </div>
+        </div>
+
+        <button className="mt-4 bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
+          Open
+        </button>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{
+        opacity: 1,
+        y: [0, -8, 0],
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+      }}
+      whileHover={{
+        scale: 1.08,
+      }}
+      className={`absolute flex items-center gap-3 px-5 py-4 rounded-2xl shadow-xl backdrop-blur-md ${color} ${rotation} ${className}`}
+    >
+      {Icon && <Icon size={20} />}
+
+      <span className="font-medium">
+        {label}
+      </span>
+    </motion.div>
+  );
+}
